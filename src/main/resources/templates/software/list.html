@@ -10,7 +10,9 @@
             <h1 class="text-3xl font-extrabold tracking-tight text-gray-800">Inventário de Software</h1>
             <p class="text-gray-500">Gerencie ativos e monitore expirações de licenças.</p>
         </div>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-200">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-200"
+                hx-get="/gestao/novo"
+                hx-target="#modal-container">
             Adicionar Software
         </button>
     </div>
@@ -89,6 +91,8 @@
             </tbody>
         </table>
     </div>
+
+    <div id="modal-container"></div>
 </div>
 
 </body>

@@ -36,4 +36,9 @@ public class SoftwareService {
             return cb.and(predicates.toArray(new Predicate[0]));
         }));
     }
+
+    public void save(Software software){
+
+        repository.save(software);
+    }
 }
