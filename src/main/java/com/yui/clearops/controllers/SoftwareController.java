@@ -36,7 +36,7 @@ public class SoftwareController {
 
         List<Software> resultados = service.buscarComFiltro(nome, depto, status);
         model.addAttribute("softwares", resultados);
-        return "software/list :: #lista-software";
+        return "software/list :: lista";
     }
 
     @GetMapping("/novo")
@@ -45,14 +45,9 @@ public class SoftwareController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(
-            Software software,
-            Model model,
-            HttpServletResponse response){
-
+    public String salvar(Software software, Model model){
         service.save(software);
-
         model.addAttribute("softwares", service.listAll());
-        return "software/list :: #lista-software";
+        return "software/list :: lista";
     }
 }

@@ -1,16 +1,62 @@
 <aside th:fragment="sidebar"
-       :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-       class="fixed inset-y-0 left-0 z-20 w-64 pt-16 transition-transform duration-300 transform bg-white border-r border-gray-200 lg:static lg:translate-x-0">
-    <div class="p-4 space-y-2">
-        <p class="text-xs font-semibold text-gray-400 uppercase px-3 pb-2">Gestão</p>
-        <a th:href="@{/software}" class="flex items-center px-3 py-2 text-blue-600 bg-blue-50 rounded-lg font-medium">
-            <span>Inventário</span>
-        </a>
-        <a th:href="@{/offboarding}" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-            <span>Offboarding</span>
-        </a>
-        <a th:href="@{/financeiro}" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-            <span>Financeiro</span>
-        </a>
+       x-show="sidebarOpen"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="-translate-x-full"
+       x-transition:enter-end="translate-x-0"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="translate-x-0"
+       x-transition:leave-end="-translate-x-full"
+       class="w-72 bg-white border-r border-slate-200 h-full flex flex-col shadow-sm z-20">
+
+    <div class="p-6 space-y-8 flex-1 overflow-y-auto">
+        <div>
+            <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Operações</p>
+            <nav class="space-y-1">
+                <a th:href="@{/gestao}"
+                   class="flex items-center gap-3 px-4 py-3 text-blue-600 bg-blue-50 rounded-2xl font-bold transition-all group">
+                    <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    Inventário
+                </a>
+
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-semibold transition-all group">
+                    <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 7a4 4 0 11-8 0 4 4 0 018 0zM9 14a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zM21 12h-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    Offboarding
+                </a>
+
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-semibold transition-all group">
+                    <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    Monitoramento
+                </a>
+            </nav>
+        </div>
+
+        <div>
+            <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Sistema</p>
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl font-semibold transition-all group">
+                    <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-width="2"></path>
+                        <circle cx="12" cy="12" r="3" stroke-width="2"></circle>
+                    </svg>
+                    Configurações
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="p-6 border-t border-slate-100">
+        <div class="bg-slate-900 rounded-2xl p-4 shadow-lg shadow-slate-200">
+            <div class="flex items-center gap-2 mb-1">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest">ClearOps Engine</p>
+            </div>
+            <p class="text-[10px] text-slate-500 font-mono">STABLE_V1.0.4</p>
+        </div>
     </div>
 </aside>
