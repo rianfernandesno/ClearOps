@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS software (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    departamento VARCHAR(50) NOT NULL,
+    status VARCHAR(15) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id)
+);
