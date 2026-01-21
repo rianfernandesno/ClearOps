@@ -15,27 +15,37 @@
         </button>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div id="filtros-container" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+
         <div class="md:col-span-2">
             <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Busca Rápida</label>
             <input type="text" name="nome" placeholder="Nome do software..."
                    class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 transition-all shadow-inner"
-                   hx-get="/software/filtro" hx-trigger="keyup changed delay:300ms" hx-target="#lista-software">
+                   hx-get="/gestao/filtro"
+                   hx-trigger="keyup changed delay:300ms"
+                   hx-target="#lista-software"
+                   hx-include="#filtros-container input, #filtros-container select">
         </div>
+
         <div>
             <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Departamento</label>
             <select name="depto" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                    hx-get="/software/filtro" hx-target="#lista-software">
+                    hx-get="/gestao/filtro"
+                    hx-target="#lista-software"
+                    hx-include="#filtros-container input, #filtros-container select">
                 <option value="">Todos</option>
                 <option value="TI">TI</option>
                 <option value="RH">RH</option>
                 <option value="Financeiro">Financeiro</option>
             </select>
         </div>
+
         <div>
             <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Status</label>
             <select name="status" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500"
-                    hx-get="/software/filtro" hx-target="#lista-software">
+                    hx-get="/gestao/filtro"
+                    hx-target="#lista-software"
+                    hx-include="#filtros-container input, #filtros-container select">
                 <option value="">Todos</option>
                 <option value="Ativo">Ativo</option>
                 <option value="Pendente">Pendente</option>
@@ -56,20 +66,25 @@
             </tr>
             </thead>
             <tbody id="lista-software" class="divide-y divide-gray-50">
-            <tr th:each="s : ${softwares}" class="hover:bg-blue-50/30 transition-colors group">
+            <tr th:fragment="lista" th:each="s : ${softwares}" class="hover:bg-blue-50/30 transition-colors group">
                 <td class="px-6 py-4">
                     <div class="font-bold text-gray-700" th:text="${s.nome}">Slack</div>
                 </td>
                 <td class="px-6 py-4 text-gray-500 text-sm" th:text="${s.departamento}">Engenharia</td>
                 <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold"
-                          th:classappend="${s.status == 'Ativo' ? 'bg-green-100 text-green-700' :
-                                           s.status == 'Expirado' ? 'bg-red-100 text-red-700' :
-                                           'bg-amber-100 text-amber-700'}"
-                          th:text="${s.status}">Status</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold"
+                              th:classappend="${s.status == 'Ativo' ? 'bg-green-100 text-green-700' :
+                                               s.status == 'Expirado' ? 'bg-red-100 text-red-700' :
+                                               'bg-amber-100 text-amber-700'}"
+                              th:text="${s.status}">Status</span>
                 </td>
                 <td class="px-6 py-4 text-right font-mono font-bold text-gray-600"
                     th:text="${#numbers.formatCurrency(s.valor)}">R$ 0,00</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(softwares)}">
+                <td colspan="4" class="px-6 py-10 text-center text-gray-400 italic">
+                    Nenhum software encontrado para os filtros selecionados.
+                </td>
             </tr>
             </tbody>
         </table>
