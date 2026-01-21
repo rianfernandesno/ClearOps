@@ -1,0 +1,44 @@
+<div id="modal-offboarding" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-[3rem] shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in duration-300">
+        <div class="p-10 text-center">
+            <div class="w-24 h-24 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter" th:text="${name}">Nome do Processo</h2>
+            <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-8" th:text="'ID do Processo: ' + ${pid}">PID: 0</p>
+
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-green-50 p-6 rounded-3xl border border-green-100">
+                    <p class="text-[10px] font-black text-green-600 uppercase mb-1">Ganho de CPU</p>
+                    <p class="text-2xl font-black text-slate-900" th:text="${#numbers.formatDecimal(cpuLoad, 1, 1) + '%'}">0%</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100">
+                    <p class="text-[10px] font-black text-blue-600 uppercase mb-1">Ganho de RAM</p>
+                    <p class="text-2xl font-black text-slate-900" th:text="${#numbers.formatInteger(ramUsage, 1) + 'MB'}">0MB</p>
+                </div>
+            </div>
+
+            <div class="mb-8 p-4 bg-slate-50 rounded-2xl">
+                <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Score de Impacto no Sistema</p>
+                <div class="text-xl font-bold text-slate-700" th:text="${#numbers.formatDecimal(impactScore, 1, 2)}">0.00</div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <form th:action="@{/monitoramento/kill}" method="POST">
+                    <input type="hidden" name="pid" th:value="${pid}">
+                    <button type="submit" class="w-full bg-red-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-xl shadow-red-200">
+                        Finalizar Agora
+                    </button>
+                </form>
+
+                <button onclick="document.getElementById('modal-offboarding').remove()"
+                        class="w-full bg-slate-100 text-slate-500 py-4 rounded-2xl font-bold hover:bg-slate-200 transition-all">
+                    Manter Ativo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}">
+<body>
+
+<div layout:fragment="content" class="w-full pb-20 font-sans">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-blue-600 font-black text-sm uppercase tracking-[0.3em] mb-2 block">Live Intelligence</span>
+                <h1 class="text-6xl font-black text-slate-900 tracking-tighter italic leading-none">Monitoramento</h1>
+                <p class="text-slate-400 font-medium text-lg mt-3">Status do sistema em <span class="text-blue-600 font-bold">tempo real</span> ⚡</p>
+            </div>
+            <div class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-2xl">
+                Sistema: <span class="text-green-400" th:text="${osName}">OS</span>
+            </div>
+        </div>
+
+        <div id="metrics-content"
+             hx-get="/monitoramento/metrics"
+             hx-trigger="every 3s"
+             hx-swap="outerHTML">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Processamento (CPU)</p>
+                    <div class="flex items-end gap-2">
+                        <span class="text-6xl font-black text-slate-900 tracking-tighter" th:text="${#numbers.formatDecimal(cpuUsage, 1, 0) + '%'}">0%</span>
+                        <div class="w-full bg-slate-100 h-3 rounded-full mb-3 overflow-hidden">
+                            <div class="bg-blue-600 h-full transition-all duration-1000" th:style="'width: ' + ${cpuUsage} + '%'"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Memória RAM</p>
+                    <div class="flex flex-col">
+                        <span class="text-6xl font-black text-slate-900 tracking-tighter" th:text="${#numbers.formatDecimal(ramUsage, 1, 0) + '%'}">0%</span>
+                        <p class="text-slate-400 font-bold text-xs mt-2" th:text="${ramUsedGb} + 'GB usados de ' + ${ramTotalGb} + 'GB'"></p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Temperatura CPU</p>
+                    <div class="flex items-center gap-4">
+                        <span class="text-6xl font-black text-slate-900 tracking-tighter" th:text="${#numbers.formatDecimal(cpuTemp, 1, 0) + '°'}">0°</span>
+                        <div class="p-4 bg-orange-50 text-orange-500 rounded-3xl">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[3rem] border border-slate-100 shadow-2xl overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                    <tr class="bg-slate-50/50">
+                        <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase">Processo</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase">Uso de CPU</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-slate-400 uppercase">Uso de RAM</th>
+                        <th class="px-10 py-6 text-right text-[10px] font-black text-slate-400 uppercase">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                    <tr th:each="p : ${processes}" class="hover:bg-blue-50/50 transition-colors group">
+                        <td class="px-10 py-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black text-xs" th:text="${#strings.substring(p.name,0,1).toUpperCase()}"></div>
+                                <span class="font-bold text-slate-700" th:text="${p.name}">Nome</span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-6 font-mono font-black text-slate-900" th:text="${#numbers.formatDecimal(p.cpuUsage, 1, 1) + '%'}">0%</td>
+                        <td class="px-10 py-6 font-mono text-slate-500" th:text="${#numbers.formatInteger(p.ramUsageMb, 1) + ' MB'}">0 MB</td>
+                        <td class="px-10 py-6 text-right">
+                            <button th:attr="hx-get=@{/monitoramento/offboarding-detalhe(pid=${p.pid}, name=${p.name}, cpu=${p.cpuUsage}, ram=${p.ramUsageMb})}"
+                                    hx-target="body"
+                                    hx-swap="beforeend"
+                                    class="bg-slate-900 text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-red-600 transition-all">
+                                Offboarding
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

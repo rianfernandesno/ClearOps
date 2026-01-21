@@ -9,7 +9,7 @@
     <script th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 h-screen overflow-hidden" x-data="{ sidebarOpen: true, easterEgg: false }">
+<body class="bg-[#f8fafc] text-slate-900 min-h-screen" x-data="{ sidebarOpen: true, easterEgg: false }">
 
 <div x-show="easterEgg" x-transition.opacity class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
     <div @click.away="easterEgg = false" class="bg-white p-8 rounded-3xl shadow-2xl text-center transform scale-110">
@@ -21,10 +21,10 @@
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="flex h-screen pt-16">
+<div class="flex pt-16 min-h-screen">
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    <main layout:fragment="content" class="flex-1 h-full overflow-y-auto p-8 pb-24">
+    <main layout:fragment="content" class="flex-1 p-8 pb-24">
     </main>
 </div>
 
