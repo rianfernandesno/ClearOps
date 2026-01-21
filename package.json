@@ -1,0 +1,25 @@
+{
+  "name": "clearops",
+  "version": "1.0.0",
+  "description": "Um projeto de gestão que tem o objetivo de testar a renderização do html a partir do backend",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css",
+    "watch": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rianfernandesno/ClearOps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rianfernandesno/ClearOps/issues"
+  },
+  "homepage": "https://github.com/rianfernandesno/ClearOps#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
