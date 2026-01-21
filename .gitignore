@@ -37,6 +37,11 @@ yarn-error.log*
 .env
 .env.local
 application-local.properties
+node.exe
+npm
+npm.cmd
+npx
+npx.cmd
 
 ### --- ARQUIVOS DE OS --- ###
 .DS_Store
