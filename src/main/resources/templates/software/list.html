@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}"> <body>
+
+<div layout:fragment="content">
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Inventário de Software</h1>
+            <p class="text-gray-500">Gerencie ativos e monitore expirações de licenças.</p>
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-200">
+            Adicionar Software
+        </button>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Busca Rápida</label>
+            <input type="text" name="nome" placeholder="Nome do software..."
+                   class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 transition-all"
+                   hx-get="/software/filtro" hx-trigger="keyup changed delay:300ms" hx-target="#lista-software">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Departamento</label>
+            <select name="depto" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                    hx-get="/software/filtro" hx-target="#lista-software">
+                <option value="">Todos</option>
+                <option value="TI">TI</option>
+                <option value="Vendas">Vendas</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Status</label>
+            <select name="status" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                    hx-get="/software/filtro" hx-target="#lista-software">
+                <option value="">Todos</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Revisão">Em Auditoria</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full">
+            <thead class="bg-gray-50/50 border-b border-gray-100">
+            <tr class="text-left text-gray-400 text-xs uppercase tracking-wider">
+                <th class="px-6 py-4">Software</th>
+                <th class="px-6 py-4">Departamento</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4 text-right">Valor</th>
+            </tr>
+            </thead>
+            <tbody id="lista-software" class="divide-y divide-gray-50">
+            <tr th:each="s : ${softwares}" class="hover:bg-blue-50/30 transition-colors group">
+                <td class="px-6 py-4">
+                    <div class="font-bold text-gray-700" th:text="${s.nome}">Slack</div>
+                </td>
+                <td class="px-6 py-4 text-gray-500" th:text="${s.departamento}">Engenharia</td>
+                <td class="px-6 py-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700" th:text="${s.status}">Ativo</span>
+                </td>
+                <td class="px-6 py-4 text-right font-mono font-bold text-gray-600" th:text="${'R$ ' + s.valor}">R$ 0,00</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
